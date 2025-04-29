@@ -264,8 +264,6 @@ def main():
     explode_sound = pg.mixer.Sound("Resources/explosion.mp3")
     bomb_drop_sound = pg.mixer.Sound("Resources/falling.mp3")
 
-    if health <= 0:
-        pg.mixer.music.stop()
 
 
     bg_r = bg.get_rect()
@@ -297,10 +295,17 @@ def main():
                 smoke.clear()
                 game_over = False
                 pg.mouse.set_visible(False)
-
+        
         if not game_over:
             rt = max(0, rt - dt)
             st = max(0, st - dt)
+
+            if health <= 0:
+                pg.mixer.music.stop()
+
+            if not game_over:
+                rt = max(0, rt - dt)
+                st = max(0, st - dt)
 
             # spawn bombers using correct speed
             if st <= 0:
